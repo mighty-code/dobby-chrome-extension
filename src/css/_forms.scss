@@ -1,0 +1,20 @@
+.form-control {
+  @apply .appearance-none .border .rounded-full .py-2 .px-3 .bg-blue .text-white .font-medium .border-2;
+  outline: none;
+  font-size: 1.3rem;
+}
+
+.form-control::placeholder {
+  @apply .text-white .font-medium .leading-tight;
+  outline: none;
+  font-size: 1.3rem;
+  opacity: 1;
+}
+
+.form-group {
+  @apply .pb-2;
+}
+
+.btn {
+  @apply .text-white .font-bold .py-2 .px-4;
+}

@@ -1,0 +1,20 @@
+{
+    "appName": {
+        "message": "Dobby",
+        "description": "Get the next connection"
+    },
+    "appDescription": {
+        "message": "Dobby",
+        "description": "Get the next connection"
+    },
+    "updateSuccessful": {
+        "message": "Extension updated (old version was: $version$)",
+        "description": "Message for new versions",
+        "placeholders": {
+            "version": {
+                "content": "$1",
+                "example": "0.0.0"
+            }
+        }
+    }
+}
