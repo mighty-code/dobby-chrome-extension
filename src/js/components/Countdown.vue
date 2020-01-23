@@ -9,7 +9,9 @@
       <div
         class="w-2/5 text-center justify-center col-5 d-flex flex-column justify-content-center align-items-center"
       >
-        <i class="justify-center fa fa-home connection-text mb-3"></i>
+        <span class="justify-center connection-text mb-3">
+            <FontAwesomeIcon :icon="['fas', 'home']"></FontAwesomeIcon>
+        </span>
         <br>
         <span class="connection-text text-lg">{{ connection.from }}</span>
         <span class="connection-subtext block">{{ departureTime }}</span>
@@ -22,12 +24,16 @@
           v-if="connection.departure_platform"
         >Platform {{ connection.departure_platform }}</span>
         <br>
-        <i class="display-block fa-3x fas fa-long-arrow-alt-right fs-5"></i>
+        <span class="display-block">
+            <FontAwesomeIcon :icon="['fas', 'long-arrow-alt-right']" size="3x"></FontAwesomeIcon>
+        </span>
       </div>
       <div
         class="w-2/5 text-center justify-center col-5 d-flex flex-column justify-content-center align-items-center"
       >
-        <i class="display-block fa fa-map-marker-alt connection-text mb-3"></i>
+        <span class="display-block connection-text mb-3">
+            <FontAwesomeIcon :icon="['fas', 'map-marker-alt']"></FontAwesomeIcon>
+        </span>
         <br>
         <span class="connection-text text-lg">{{ connection.to }}</span>
         <span class="connection-subtext block">{{ arrivalTime }}</span>

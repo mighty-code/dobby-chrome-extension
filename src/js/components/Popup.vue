@@ -13,7 +13,7 @@
         <p v-if="!connection.id">You haven't yet created a connection</p>
       </div>
     </div>
-    <p class="text-xs mt-4">Logged in as {{user.name}}</p>
+    <p class="text-xs mt-4">Logged in as {{user.name}} <span v-if="isDev"> / ENV: dev</span></p>
   </div>
 </template>
 <script>
@@ -29,6 +29,7 @@ export default {
             userAuthenticated: false,
             user: {},
             connection: {},
+            isDev: process.env.NODE_ENV === 'development',
         };
     },
     mounted() {

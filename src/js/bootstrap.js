@@ -11,9 +11,12 @@ window.log = log;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-import fontawesome from '@fortawesome/fontawesome';
-import faSolid from '@fortawesome/fontawesome-free-solid';
-import faRegular from '@fortawesome/fontawesome-free-regular';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/fontawesome-free-solid';
+import { far } from '@fortawesome/fontawesome-free-regular';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-fontawesome.library.add(faSolid);
-fontawesome.library.add(faRegular);
+library.add(fas, far);
+
+import Vue from 'vue'
+Vue.component('FontAwesomeIcon', FontAwesomeIcon)
