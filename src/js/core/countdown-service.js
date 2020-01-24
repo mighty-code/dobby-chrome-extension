@@ -26,7 +26,7 @@ export default {
     },
 
     calculateCountdown(connection) {
-        let departure = moment(connection.departure).utc();
+        let departure = moment.unix(connection.departure).utc();
         let now = moment().utc();
         let leaveIn = departure.diff(now, 'minutes');
         let leaveInHours = departure.diff(now, 'hours');

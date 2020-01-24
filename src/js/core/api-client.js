@@ -60,7 +60,7 @@ export default class {
         }
 
         let headers = this.getHeaders(accessToken);
-        const response = await axios.get(url, { headers });
-        return response.data;
+        const { data } = await axios.get(url, { headers });
+        return data.data;
     }
 }

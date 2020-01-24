@@ -49,10 +49,10 @@ export default {
     props: ['connection'],
     computed: {
         departureTime() {
-            return moment(this.connection.departure).format('H:mm');
+            return moment.unix(this.connection.departure).format('H:mm');
         },
         arrivalTime() {
-            return moment(this.connection.arrival).format('H:mm');
+            return moment.unix(this.connection.arrival).format('H:mm');
         },
         countdown() {
             const minutes = CountdownService.calculateCountdown(this.connection);
