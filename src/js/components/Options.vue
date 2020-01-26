@@ -7,7 +7,7 @@
         <a
           class="text-white"
           target="_blank"
-          :href="this.apiUrl + '/api/manage'"
+          :href="apiUrl + '/api/manage'"
         >your Dobby Account</a> and paste it in the following text field.
       </p>
       <form @submit.prevent="setAccessToken()">
@@ -46,6 +46,9 @@
             class="border py-2 px-4 rounded-full mt-3 text-white inline-block no-underline"
           >Manage connections</a>
         </p>
+      </div>
+      <div v-else>
+          Not authenticated
       </div>
     </div>
     <div class="footer">
