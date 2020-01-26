@@ -1,5 +1,6 @@
 import countdown from '../core/countdown-service';
 import location from './../core/location';
+import echo from '../laravel-echo';
 
 export default class {
     init() {
@@ -12,6 +13,11 @@ export default class {
         // }, error => {
         //     log.error(`ERROR(${error.code}): ${error.message}`);
         // })
+
+        echo.private('App.User.2')
+            .listen('TestEvent', e => {
+            log.debug('TestEvent : e:=', e)
+        });
     }
     registerScheduler() {
         chrome.alarms.create('refresh', { periodInMinutes: 1 });
