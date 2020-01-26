@@ -7,20 +7,20 @@ export default {
                         resolve({
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
-                        });
+                        })
                     },
                     error => {
-                        log.error(`ERROR(${error.code}): ${error.message}`);
-                        reject(error);
+                        log.error(`ERROR(${error.code}): ${error.message}`)
+                        reject(error)
                     },
                     {
                         timeout: 8000,
                     }
-                );
+                )
             } else {
-                log.debug('has not geolocation');
-                resolve(null);
+                log.debug('has not geolocation')
+                resolve(null)
             }
-        });
+        })
     },
-};
+}

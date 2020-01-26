@@ -1,22 +1,22 @@
 function getSettings() {
-    let settings = JSON.parse(localStorage.getItem('settings'));
+    let settings = JSON.parse(localStorage.getItem('settings'))
     if (!settings) {
-        settings = {};
+        settings = {}
     }
-    return settings;
+    return settings
 }
 
 export default {
     setSetting(name, value) {
-        const settings = getSettings();
+        const settings = getSettings()
 
-        settings[name] = value;
+        settings[name] = value
 
-        localStorage.setItem('settings', JSON.stringify(settings));
+        localStorage.setItem('settings', JSON.stringify(settings))
     },
     getSetting(name) {
-        const settings = getSettings();
+        const settings = getSettings()
 
-        return settings[name];
+        return settings[name]
     },
-};
+}

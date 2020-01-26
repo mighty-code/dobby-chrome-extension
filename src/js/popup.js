@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-require('./bootstrap');
+require('./bootstrap')
 
-window.Vue = require('vue');
+window.Vue = require('vue')
 
-import Popup from "./components/Popup.vue";
+import Popup from './components/Popup.vue'
 
 const app = new Vue({
     el: '#app',
-    render: c => c(Popup)
-});
+    render: c => c(Popup),
+})

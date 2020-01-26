@@ -7,13 +7,13 @@ export default {
     data() {
         return {
             time: null,
-        };
+        }
     },
     mounted() {
-        this.time = moment().format('HH:mm:ss');
+        this.time = moment().format('HH:mm:ss')
         setInterval(() => {
-            this.time = moment().format('HH:mm:ss');
-        }, 1000);
+            this.time = moment().format('HH:mm:ss')
+        }, 1000)
     },
-};
+}
 </script>
