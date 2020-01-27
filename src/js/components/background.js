@@ -44,12 +44,12 @@ export default class {
         try {
             const loc = await location.getLocation()
             if (loc) {
-                connection = countdown.updateConnection(loc)
+                connection = await countdown.updateConnection(loc)
             } else {
-                connection = countdown.updateConnection()
+                connection = await countdown.updateConnection()
             }
         } catch (error) {
-            connection = countdown.updateConnection()
+            connection = await countdown.updateConnection()
         }
 
         localStorage.setItem('connection', JSON.stringify(connection))
