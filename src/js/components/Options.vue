@@ -79,7 +79,7 @@ let getVersion = () => {
 
 import ApiClient from './../core/api-client'
 import location from './../core/location'
-import settings from './../core/settings'
+import settings from './../core/settings-service'
 
 const client = new ApiClient()
 export default {

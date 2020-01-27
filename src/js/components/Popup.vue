@@ -21,13 +21,7 @@
         </div>
         <div class="flex w-full">
             <div v-if="userAuthenticated" class="w-full timetable text-center">
-                <countdown
-                    v-if="connection && connection.id"
-                    :connection="connection"
-                ></countdown>
-                <p v-if="!connection.id">
-                    You haven't yet created a connection
-                </p>
+                <countdown></countdown>
             </div>
         </div>
         <p class="text-xs mt-4">
@@ -38,7 +32,8 @@
 <script>
 import Countdown from './Countdown.vue'
 import Clock from './Clock.vue'
-import countdown from '../core/countdown-service'
+import connectionService from '../core/connection-service'
+import userService from '../core/user-service'
 import location from './../core/location'
 
 export default {
@@ -47,7 +42,7 @@ export default {
         return {
             userAuthenticated: false,
             user: {},
-            connection: {},
+            connection: null,
             isDev: process.env.NODE_ENV === 'development',
         }
     },
@@ -57,43 +52,28 @@ export default {
             this.loadConnection()
 
             setInterval(() => {
-                let connection = localStorage.getItem('connection')
-
-                if (connection) {
-                    this.connection = JSON.parse(connection)
-                }
+                this.connection = connectionService.getConnection()
             }, 1000)
         }
     },
     methods: {
         checkAuth() {
-            const user = localStorage.getItem('user')
-            try {
-                this.user = JSON.parse(user)
-                if (this.user) {
-                    return true
-                }
-            } catch (e) {
-                log.error("can't load user...", e)
-            }
-
-            return false
+            const user = userService.getUser()
+            return user !== null
         },
         async loadConnection() {
-            let connection = localStorage.getItem('connection')
+            this.connection = connectionService.getConnection()
 
-            if (connection) {
-                this.connection = JSON.parse(connection)
-            } else {
+            if (!this.connection) {
                 const loc = await location.getLocation()
                 if (loc) {
-                    this.connection = await countdown.updateConnection(loc)
+                    this.connection = await connectionService.updateConnection(
+                        loc
+                    )
                 } else {
-                    this.connection = await countdown.updateConnection()
+                    this.connection = await connectionService.updateConnection()
                 }
             }
-
-            log.debug('loadConnection() : connection:=', this.connection)
         },
     },
 }

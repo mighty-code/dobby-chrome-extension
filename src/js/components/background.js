@@ -1,5 +1,6 @@
-import countdown from '../core/countdown-service'
+import countdownService from '../core/connection-service'
 import location from './../core/location'
+import connectionService from '../core/connection-service'
 
 export default class {
     init() {
@@ -44,14 +45,14 @@ export default class {
         try {
             const loc = await location.getLocation()
             if (loc) {
-                connection = await countdown.updateConnection(loc)
+                connection = await connectionService.updateConnection(loc)
             } else {
-                connection = await countdown.updateConnection()
+                connection = await connectionService.updateConnection()
             }
         } catch (error) {
-            connection = await countdown.updateConnection()
+            connection = await connectionService.updateConnection()
         }
 
-        localStorage.setItem('connection', JSON.stringify(connection))
+        connectionService.setConnection(connection)
     }
 }

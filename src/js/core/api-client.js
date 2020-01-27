@@ -13,7 +13,7 @@ export default class {
     }
 
     async getNextConnection(location = null) {
-        let url = `${this.apiUrl}/api/connection/next`
+        let url = `${this.apiUrl}/api/connections/timetable`
         if (location) {
             url += `?lat=${location.latitude}&lng=${location.longitude}`
         }
