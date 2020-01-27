@@ -7,13 +7,7 @@ import BackgroundWorker from './components/background'
 const worker = new BackgroundWorker()
 worker.init()
 
-import * as log from 'loglevel'
-if (process.env.NODE_ENV === 'production') {
-    log.setLevel(log.levels.ERROR)
-} else {
-    log.setLevel(log.levels.DEBUG)
-}
-window.log = log
+require('./bootstrap/logging')
 
 chrome.runtime.onInstalled.addListener(details => {
     log.debug('previousVersion', details.previousVersion)
