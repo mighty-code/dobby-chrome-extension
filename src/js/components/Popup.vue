@@ -22,6 +22,16 @@
         <div class="flex w-full">
             <div v-if="userAuthenticated" class="w-full timetable text-center">
                 <countdown></countdown>
+                <div class="flex mt-2 border p-4 rounded-full">
+                    <ConnectionEntry
+                        v-if="connection && timetableEntry"
+                        :connection="connection"
+                        :timetable-entry="timetableEntry"
+                    ></ConnectionEntry>
+                </div>
+                <p v-if="!connection">
+                    You haven't yet created a connection
+                </p>
             </div>
         </div>
         <p class="text-xs mt-4">
@@ -31,28 +41,31 @@
 </template>
 <script>
 import Countdown from './Countdown.vue'
+import ConnectionEntry from './ConnectionEntry.vue'
 import Clock from './Clock.vue'
 import connectionService from '../core/connection-service'
 import userService from '../core/user-service'
 import location from './../core/location'
+import countdownService from '../core/countdown-service'
 
 export default {
-    components: { Countdown, Clock },
+    components: { Countdown, Clock, ConnectionEntry },
     data() {
         return {
             userAuthenticated: false,
             user: {},
             connection: null,
+            timetableEntry: null,
             isDev: process.env.NODE_ENV === 'development',
         }
     },
     mounted() {
         this.userAuthenticated = this.checkAuth()
         if (this.userAuthenticated) {
-            this.loadConnection()
+            this.setData()
 
             setInterval(() => {
-                this.connection = connectionService.getConnection()
+                this.setData()
             }, 1000)
         }
     },
@@ -61,19 +74,26 @@ export default {
             const user = userService.getUser()
             return user !== null
         },
+        async setData() {
+            this.connection = await this.loadConnection()
+            this.timetableEntry = connectionService.getNextConnection(
+                this.connection
+            )
+            console.log('setData() : timetableEntry:=', this.timetableEntry)
+        },
         async loadConnection() {
-            this.connection = connectionService.getConnection()
+            let connection = connectionService.getConnection()
 
-            if (!this.connection) {
+            if (!connection) {
                 const loc = await location.getLocation()
                 if (loc) {
-                    this.connection = await connectionService.updateConnection(
-                        loc
-                    )
+                    connection = await connectionService.updateConnection(loc)
                 } else {
-                    this.connection = await connectionService.updateConnection()
+                    connection = await connectionService.updateConnection()
                 }
             }
+
+            return connection
         },
     },
 }

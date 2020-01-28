@@ -38,8 +38,7 @@ export default {
         return null
     },
 
-    getNextConnection() {
-        const connection = this.getConnection()
+    getNextConnection(connection) {
         return connection.timetable[0]
     },
 }
