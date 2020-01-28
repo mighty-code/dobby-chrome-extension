@@ -22,12 +22,18 @@
         <div class="flex w-full">
             <div v-if="userAuthenticated" class="w-full timetable text-center">
                 <countdown></countdown>
-                <div class="flex mt-2 border p-4 rounded-full">
-                    <ConnectionEntry
-                        v-if="connection && timetableEntry"
-                        :connection="connection"
-                        :timetable-entry="timetableEntry"
-                    ></ConnectionEntry>
+                <div v-if="connection && timetableEntry" class="mt-2 p-4">
+                    <div
+                        v-for="(entry, index) in connection.timetable"
+                        :key="index"
+                        class="border-b border-blue-dark"
+                    >
+                        <ConnectionEntry
+                            class="my-2"
+                            :connection="connection"
+                            :timetable-entry="entry"
+                        ></ConnectionEntry>
+                    </div>
                 </div>
                 <p v-if="!connection">
                     You haven't yet created a connection

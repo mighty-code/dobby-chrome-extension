@@ -19,7 +19,7 @@ export default {
 
         const countdown = countdownService.calculateCountdown(
             connection,
-            this.getNextConnection()
+            this.getNextConnection(connection)
         )
         chrome.setBadge(countdown)
         return connection
