@@ -16,6 +16,10 @@ export default {
             return '>60'
         }
 
+        if (leaveIn <= 0) {
+            return 'now'
+        }
+
         return leaveIn
     },
 }
