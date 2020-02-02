@@ -1,66 +1,65 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export default class {
     constructor() {
-        this.apiUrl = process.env.MIX_API_URL;
+        this.apiUrl = process.env.MIX_API_URL
     }
 
     getHeaders(token) {
         return {
             Accept: 'application/json',
             Authorization: `Bearer ${token}`,
-        };
+        }
     }
 
     async getNextConnection(location = null) {
-        let url = `${this.apiUrl}/api/connection/next`;
+        let url = `${this.apiUrl}/api/connections/timetable`
         if (location) {
-            url += `?lat=${location.latitude}&lng=${location.longitude}`;
+            url += `?lat=${location.latitude}&lng=${location.longitude}`
         }
 
-        log.debug('getNextConnection() url:=', url);
+        log.debug('getNextConnection() url:=', url)
 
-        const connection = await this.request(url);
-        log.debug('getNextConnection() connection:=', connection);
-        return connection;
+        const connection = await this.request(url)
+        log.debug('getNextConnection() connection:=', connection)
+        return connection
     }
 
     async getUser() {
-        return await this.request(`${this.apiUrl}/api/user`);
+        return await this.request(`${this.apiUrl}/api/user`)
     }
 
     getAccessToken() {
-        const accessToken = localStorage.getItem('access_token');
-        return accessToken;
+        const accessToken = localStorage.getItem('access_token')
+        return accessToken
     }
 
     getApiUrl() {
-        return this.apiUrl;
+        return this.apiUrl
     }
 
     isOnline() {
         if (navigator.onLine) {
-            return true;
+            return true
         } else {
-            return false;
+            return false
         }
     }
 
     async request(url) {
-
-        if(!this.isOnline()) {
+        if (!this.isOnline()) {
             log.warn('huston, we have a problem: no internet here...')
-            return Promise.resolve(null);
+            return Promise.resolve(null)
         }
 
-        const accessToken = this.getAccessToken();
+        const accessToken = this.getAccessToken()
         if (!accessToken) {
             log.warn('has no access token!')
-            return Promise.resolve(null);
+            return Promise.resolve(null)
         }
 
-        let headers = this.getHeaders(accessToken);
-        const response = await axios.get(url, { headers });
-        return response.data;
+        let headers = this.getHeaders(accessToken)
+        const { data } = await axios.get(url, { headers })
+        return data.data
     }
 }

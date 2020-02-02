@@ -1,5 +1,5 @@
-let mix = require('laravel-mix');
-let tailwindcss = require('tailwindcss');
+let mix = require('laravel-mix')
+let tailwindcss = require('tailwindcss')
 // require('laravel-mix-purgecss');
 
 /*
@@ -13,17 +13,16 @@ let tailwindcss = require('tailwindcss');
  |
  */
 
-mix.setPublicPath('dist');
+mix.setPublicPath('dist')
 
-mix.disableSuccessNotifications();
+mix.disableSuccessNotifications()
 
 mix.options({
     processCssUrls: false,
     postCss: [tailwindcss('./tailwind.js')],
-});
+})
 
-mix
-    .sass('src/css/popup.scss', 'dist/css')
+mix.sass('src/css/popup.scss', 'dist/css')
     .sass('src/css/options.scss', 'dist/css')
     .js('src/js/background.js', 'dist/js')
     .js('src/js/popup.js', 'dist/js')
@@ -33,9 +32,8 @@ mix
     .copyDirectory('src/images', 'dist/images')
     .copyDirectory('src/_locales', 'dist/_locales')
     .copy('src/manifest.json', 'dist/')
-    //.purgeCss();
+//.purgeCss();
 
 if (!mix.inProduction) {
-    mix.sourceMaps();
+    mix.sourceMaps()
 }
-
