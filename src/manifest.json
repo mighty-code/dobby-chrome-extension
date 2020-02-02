@@ -13,7 +13,16 @@
         "scripts": ["js/background.js"],
         "persistent": false
     },
-    "permissions": ["tabs", "storage", "alarms", "background", "notifications", "geolocation", "http://*/*", "https://*/*"],
+    "permissions": [
+        "tabs",
+        "storage",
+        "alarms",
+        "background",
+        "notifications",
+        "geolocation",
+        "https://dobby-api.novu.io/*",
+        "https://dobby.mighty-code.com/*"
+    ],
     "options_page": "options.html",
     "browser_action": {
         "default_icon": {
