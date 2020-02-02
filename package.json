@@ -38,6 +38,7 @@
         "lodash": "^4.17.13",
         "loglevel": "^1.6.1",
         "moment": "^2.21.0",
+        "pusher-js": "^5.0.3",
         "sass": "^1.25.0",
         "sass-loader": "^8.0.2",
         "tailwindcss": "^0.5.1",
