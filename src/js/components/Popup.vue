@@ -85,7 +85,6 @@ export default {
             this.timetableEntry = connectionService.getNextConnection(
                 this.connection
             )
-            console.log('setData() : timetableEntry:=', this.timetableEntry)
         },
         async loadConnection() {
             let connection = connectionService.getConnection()
