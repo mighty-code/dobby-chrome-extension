@@ -58,15 +58,20 @@ export default {
     components: { Countdown, Clock, ConnectionEntry },
     data() {
         return {
-            userAuthenticated: false,
-            user: {},
             connection: null,
             timetableEntry: null,
             isDev: process.env.NODE_ENV === 'development',
         }
     },
+    computed: {
+        user() {
+            return userService.getUser()
+        },
+        userAuthenticated() {
+            return this.user !== null
+        },
+    },
     mounted() {
-        this.userAuthenticated = this.checkAuth()
         if (this.userAuthenticated) {
             this.setData()
 
