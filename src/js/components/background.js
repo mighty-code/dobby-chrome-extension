@@ -1,11 +1,13 @@
 import location from './../core/location'
 import connectionService from '../core/connection-service'
+import userService from '../core/user-service'
 import echo from '../core/laravel-echo'
 
 export default class {
     init() {
         this.apiUrl = process.env.MIX_API_URL
         this.registerScheduler()
+        this.subscribe()
         this.refresh()
 
         // navigator.geolocation.watchPosition(location => {
@@ -13,10 +15,6 @@ export default class {
         // }, error => {
         //     log.error(`ERROR(${error.code}): ${error.message}`);
         // })
-
-        echo.private('App.User.2').listen('TestEvent', e => {
-            log.debug('TestEvent : e:=', e)
-        })
     }
     registerScheduler() {
         chrome.alarms.create('refresh', { periodInMinutes: 1 })
@@ -58,5 +56,16 @@ export default class {
         }
 
         connectionService.setConnection(connection)
+    }
+
+    subscribe() {
+        const user = userService.getUser()
+        echo.private(`App.User.${user.id}`).listen(
+            'SelectedConnectionUpdated',
+            e => {
+                log.debug('SelectedConnectionUpdated : e:=', e)
+                this.refresh()
+            }
+        )
     }
 }

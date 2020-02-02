@@ -1,5 +1,5 @@
-import Echo from 'laravel-echo';
-const Pusher = require('pusher-js');
+import Echo from 'laravel-echo'
+const Pusher = require('pusher-js')
 
 const token = localStorage.getItem('access_token')
 
@@ -15,14 +15,14 @@ let options = {
     auth: {
         headers: {
             Accept: 'application/json',
-            Authorization: 'Bearer ' + token
-        }
-    }
-};
+            Authorization: 'Bearer ' + token,
+        },
+    },
+}
 
 Pusher.logToConsole = process.env.NODE_ENV === 'development'
-options.client = new Pusher(options.key, options);
+options.client = new Pusher(options.key, options)
 
-let echo = new Echo(options);
+let echo = new Echo(options)
 
-export default echo;
+export default echo
