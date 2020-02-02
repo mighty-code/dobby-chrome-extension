@@ -1,12 +1,12 @@
-import countdown from '../core/countdown-service';
-import location from './../core/location';
-import echo from '../laravel-echo';
+import location from './../core/location'
+import connectionService from '../core/connection-service'
+import echo from '../core/laravel-echo'
 
 export default class {
     init() {
-        this.apiUrl = process.env.MIX_API_URL;
-        this.registerScheduler();
-        this.refresh();
+        this.apiUrl = process.env.MIX_API_URL
+        this.registerScheduler()
+        this.refresh()
 
         // navigator.geolocation.watchPosition(location => {
         //     this.refresh();
@@ -14,21 +14,20 @@ export default class {
         //     log.error(`ERROR(${error.code}): ${error.message}`);
         // })
 
-        echo.private('App.User.2')
-            .listen('TestEvent', e => {
+        echo.private('App.User.2').listen('TestEvent', e => {
             log.debug('TestEvent : e:=', e)
-        });
+        })
     }
     registerScheduler() {
-        chrome.alarms.create('refresh', { periodInMinutes: 1 });
+        chrome.alarms.create('refresh', { periodInMinutes: 1 })
 
-        let self = this;
+        let self = this
         chrome.alarms.onAlarm.addListener(alarm => {
-            self.onAlarm(alarm, self);
-        });
+            self.onAlarm(alarm, self)
+        })
     }
     onAlarm(alarm, intance) {
-        log.debug(alarm);
+        log.debug(alarm)
         // chrome.notifications.create(
         //     alarm.scheduledTime + '',
         //     {
@@ -41,23 +40,23 @@ export default class {
         // );
 
         if (alarm.name === 'refresh') {
-            intance.refresh();
+            intance.refresh()
         }
     }
 
     async refresh() {
-        let connection = null;
+        let connection = null
         try {
-            const loc = await location.getLocation();
+            const loc = await location.getLocation()
             if (loc) {
-                connection = countdown.updateConnection(loc);
+                connection = await connectionService.updateConnection(loc)
             } else {
-                connection = countdown.updateConnection();
+                connection = await connectionService.updateConnection()
             }
         } catch (error) {
-            connection = countdown.updateConnection();
+            connection = await connectionService.updateConnection()
         }
 
-        localStorage.setItem('connection', JSON.stringify(connection));
+        connectionService.setConnection(connection)
     }
 }

@@ -1,12 +1,12 @@
-'use strict';
+'use strict'
 
-require('./bootstrap');
+require('./bootstrap')
 
-window.Vue = require('vue');
+window.Vue = require('vue')
 
-import Options from "./components/Options.vue";
+import Options from './components/Options.vue'
 
 const app = new Vue({
     el: '#app',
-    render: c => c(Options)
-});
+    render: c => c(Options),
+})
