@@ -17,7 +17,7 @@
         "@fortawesome/fontawesome-free-solid": "^5.1.0-3",
         "@fortawesome/fontawesome-svg-core": "^1.2.26",
         "@fortawesome/vue-fontawesome": "^0.1.9",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "babel-eslint": "^10.0.3",
         "cross-env": "^7.0.0",
         "eslint": "^6.4.0",
