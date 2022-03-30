@@ -4,13 +4,9 @@
 // based on example https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/extensions/gmail/
 
 import BackgroundWorker from './components/background'
-const worker = new BackgroundWorker()
-worker.init()
 
-require('./bootstrap/logging')
-
-chrome.runtime.onInstalled.addListener(details => {
-    log.debug('previousVersion', details.previousVersion)
+chrome.runtime.onInstalled.addListener((details) => {
+    console.debug('previousVersion', details.previousVersion)
 
     let manifestData = chrome.runtime.getManifest()
 
@@ -27,4 +23,7 @@ chrome.runtime.onInstalled.addListener(details => {
         )
         alert(message)
     }
+
+    const worker = new BackgroundWorker()
+    worker.init()
 })

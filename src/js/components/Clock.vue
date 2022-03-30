@@ -1,8 +1,9 @@
 <template>
-    <h3>{{ time }}</h3>
+    <h3 class="text-sm">{{ time }}</h3>
 </template>
 
 <script>
+import { format } from 'date-fns'
 export default {
     data() {
         return {
@@ -10,9 +11,9 @@ export default {
         }
     },
     mounted() {
-        this.time = moment().format('HH:mm:ss')
+        this.time = format(new Date(), 'HH:mm:ss')
         setInterval(() => {
-            this.time = moment().format('HH:mm:ss')
+            this.time = format(new Date(), 'HH:mm:ss')
         }, 1000)
     },
 }

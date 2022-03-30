@@ -3,14 +3,14 @@ export default {
         return new Promise((resolve, reject) => {
             if ('geolocation' in navigator) {
                 navigator.geolocation.getCurrentPosition(
-                    position => {
+                    (position) => {
                         resolve({
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude,
                         })
                     },
-                    error => {
-                        log.error(`ERROR(${error.code}): ${error.message}`)
+                    (error) => {
+                        console.error(`ERROR(${error.code}): ${error.message}`)
                         reject(error)
                     },
                     {
@@ -18,7 +18,7 @@ export default {
                     }
                 )
             } else {
-                log.debug('has not geolocation')
+                console.debug('has no geolocation')
                 resolve(null)
             }
         })

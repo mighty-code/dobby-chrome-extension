@@ -1,17 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Heebo");
 
-@tailwind preflight;
-
+@tailwind base;
 @tailwind components;
-
 @tailwind utilities;
 
-@tailwind screens;
+@layer components {
+    body {
+    @apply text-white bg-brand font-sans min-w-[500px];
+    font-size: 16px;
+    }
 
-body {
-  @apply .text-white .bg-blue .font-sans;
-  font-size: 16px;
-  min-width: 500px;
+    @import "./forms";
 }
-
-@import "./forms";

@@ -1,10 +1,12 @@
+import storage from '../core/storage'
+
 export default {
-    getUser() {
-        const user = localStorage.getItem('user')
+    async getUser() {
+        const user = await storage.get('user')
         try {
-            return JSON.parse(user)
+            return user
         } catch (e) {
-            log.error("can't load user...", e)
+            console.error("can't load user...", e)
         }
 
         return null

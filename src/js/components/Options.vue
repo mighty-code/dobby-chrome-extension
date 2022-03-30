@@ -1,7 +1,7 @@
 <template>
-    <div class="options-page flex flex-col justify-between h-full">
+    <div class="flex h-full flex-col justify-between">
         <div>
-            <h1 class="my-3">Dobby ({{ version }})</h1>
+            <h1 class="my-3 text-2xl">Dobby ({{ version }})</h1>
             <p class="my-3">
                 Create new Personal Access Token under
                 <a
@@ -14,13 +14,13 @@
             </p>
             <form @submit.prevent="setAccessToken()">
                 <input
-                    v-model="access_token"
-                    class="border p-4 rounded-full bg-transparent w-full text-white"
-                    type="password"
+                    v-model="accessToken"
+                    class="w-full rounded-full border bg-transparent p-4 text-white"
+                    type="text"
                     placeholder
                 />
                 <div class="mt-1">
-                    <span class="italic text-sm"
+                    <span class="text-sm italic"
                         >By adding an access token you confirm our usage
                         <a class="text-white" :href="imprintUrl"
                             >agreement and policy</a
@@ -29,7 +29,7 @@
                 </div>
                 <button
                     type="submit"
-                    class="border py-2 px-4 rounded-full mt-3 text-white"
+                    class="mt-3 rounded-full border py-2 px-4 text-white"
                 >
                     Save
                 </button>
@@ -55,14 +55,12 @@
                     <a
                         :href="manageConnectionsUrl"
                         target="_blank"
-                        class="border py-2 px-4 rounded-full mt-3 text-white inline-block no-underline"
+                        class="mt-3 inline-block rounded-full border py-2 px-4 text-white no-underline"
                         >Manage connections</a
                     >
                 </p>
             </div>
-            <div v-else>
-                Not authenticated
-            </div>
+            <div v-else>Not authenticated</div>
         </div>
         <div class="footer">
             <div v-if="lat && lng && showNearestLocation">
@@ -80,24 +78,22 @@ let getVersion = () => {
 import ApiClient from './../core/api-client'
 import location from './../core/location'
 import settings from './../core/settings-service'
+import storage from '../core/storage'
 
 const client = new ApiClient()
 export default {
     data() {
         return {
-            client: client,
             apiUrl: client.getApiUrl(),
             version: getVersion(),
-            access_token: null,
-            token_type: null,
-            hash: null,
-            expires_in: null,
+            accessToken: null,
             user: null,
             lat: null,
             lng: null,
             showNearestLocation: false,
         }
     },
+
     computed: {
         manageConnectionsUrl() {
             return this.apiUrl + '/manage'
@@ -106,19 +102,24 @@ export default {
             return this.apiUrl + '/imprint'
         },
     },
+
     async mounted() {
-        this.access_token = localStorage.getItem('access_token')
-        this.user = await this.client.getUser()
-        this.getLocation()
-        this.showNearestLocation = settings.getSetting('showNearestLocation')
+        this.accessToken = await storage.get('access_token')
+        this.user = await client.getUser()
+        console.log('user', this.user)
+        await this.getLocation()
+        this.showNearestLocation = await settings.getSetting(
+            'showNearestLocation'
+        )
     },
+
     methods: {
         async setAccessToken() {
-            localStorage.setItem('access_token', this.access_token)
+            await storage.set('access_token', this.accessToken)
             try {
-                const user = await this.client.getUser()
+                const user = await client.getUser()
                 this.user = user
-                localStorage.setItem('user', JSON.stringify(this.user))
+                await storage.set('user', this.user)
             } catch (error) {
                 this.user = null
                 let message = 'error while loading user'
@@ -128,11 +129,13 @@ export default {
                 alert(message)
             }
         },
+
         async getLocation() {
             const loc = await location.getLocation()
             this.lat = loc.latitude.toFixed(8)
             this.lng = loc.longitude.toFixed(8)
         },
+
         setShowNearestLocation() {
             this.showNearestLocation = !this.showNearestLocation
             settings.setSetting('showNearestLocation', this.showNearestLocation)

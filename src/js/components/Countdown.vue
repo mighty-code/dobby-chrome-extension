@@ -2,7 +2,7 @@
     <div class="pt-5">
         <div class="row">
             <div class="col-12 text-center">
-                <h1 class="countdown">{{ countdown }}</h1>
+                <h1 class="countdown text-2xl">{{ countdown }}</h1>
             </div>
         </div>
     </div>
@@ -20,16 +20,16 @@ export default {
             timetableEntry: null,
         }
     },
-    mounted() {
-        this.setData()
+    async mounted() {
+        await this.setData()
 
-        setInterval(() => {
-            this.setData()
+        setInterval(async () => {
+            await this.setData()
         }, 1000)
     },
     methods: {
-        setData() {
-            this.connection = connectionService.getConnection()
+        async setData() {
+            this.connection = await connectionService.getConnection()
             this.timetableEntry = connectionService.getNextConnection(
                 this.connection
             )

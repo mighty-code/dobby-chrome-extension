@@ -2,12 +2,15 @@ import ApiClient from './api-client'
 import settings from './settings-service'
 import chrome from './chrome-service'
 import countdownService from './countdown-service'
+import storage from '../core/storage'
 
 export default {
     async updateConnection(location = null) {
         const client = new ApiClient()
-        const showNearestLocation = settings.getSetting('showNearestLocation')
-        log.debug('showNearestLocation:=', showNearestLocation)
+        const showNearestLocation = await settings.getSetting(
+            'showNearestLocation'
+        )
+        console.debug('showNearestLocation:=', showNearestLocation)
         if (!showNearestLocation) {
             location = null
         }
@@ -19,26 +22,29 @@ export default {
 
         const countdown = countdownService.calculateCountdown(
             connection,
-            this.getNextConnection(connection)
+            await this.getNextConnection(connection)
         )
+
         chrome.setBadge(countdown)
         return connection
     },
 
-    setConnection(connection) {
-        localStorage.setItem('connection', JSON.stringify(connection))
+    async setConnection(connection) {
+        return storage.set('connection', connection)
     },
 
-    getConnection() {
-        const connection = localStorage.getItem('connection')
+    async getConnection() {
+        const connection = await storage.get('connection')
         if (connection) {
-            return JSON.parse(connection)
+            return connection
         }
 
         return null
     },
 
     getNextConnection(connection) {
-        return connection.timetable[0]
+        return Array.isArray(connection.timetable)
+            ? connection.timetable[0]
+            : null
     },
 }

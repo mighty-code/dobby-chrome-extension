@@ -1,4 +1,4 @@
-import axios from 'axios'
+import storage from '../core/storage'
 
 export default class {
     constructor() {
@@ -8,7 +8,7 @@ export default class {
     getHeaders(token) {
         return {
             Accept: 'application/json',
-            Authorization: `Bearer ${token}`,
+            Authorization: token ? `Bearer ${token}` : '',
         }
     }
 
@@ -18,10 +18,10 @@ export default class {
             url += `?lat=${location.latitude}&lng=${location.longitude}`
         }
 
-        log.debug('getNextConnection() url:=', url)
+        console.debug('getNextConnection() url:=', url)
 
         const connection = await this.request(url)
-        log.debug('getNextConnection() connection:=', connection)
+        console.debug('getNextConnection() connection:=', connection)
         return connection
     }
 
@@ -29,8 +29,8 @@ export default class {
         return await this.request(`${this.apiUrl}/api/user`)
     }
 
-    getAccessToken() {
-        const accessToken = localStorage.getItem('access_token')
+    async getAccessToken() {
+        const accessToken = await storage.get('access_token')
         return accessToken
     }
 
@@ -48,18 +48,20 @@ export default class {
 
     async request(url) {
         if (!this.isOnline()) {
-            log.warn('huston, we have a problem: no internet here...')
-            return Promise.resolve(null)
+            console.warn('huston, we have a problem: no internet here...')
+            return null
         }
 
-        const accessToken = this.getAccessToken()
+        const accessToken = await this.getAccessToken()
         if (!accessToken) {
-            log.warn('has no access token!')
+            console.warn('has no access token!')
             return Promise.resolve(null)
         }
 
         let headers = this.getHeaders(accessToken)
-        const { data } = await axios.get(url, { headers })
-        return data.data
+        const response = await fetch(url, { headers })
+
+        const data = await response.json()
+        return data.data ?? data
     }
 }

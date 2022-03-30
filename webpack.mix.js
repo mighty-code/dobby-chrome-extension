@@ -1,6 +1,5 @@
 let mix = require('laravel-mix')
 let tailwindcss = require('tailwindcss')
-// require('laravel-mix-purgecss');
 
 /*
  |--------------------------------------------------------------------------
@@ -19,7 +18,7 @@ mix.disableSuccessNotifications()
 
 mix.options({
     processCssUrls: false,
-    postCss: [tailwindcss('./tailwind.js')],
+    postCss: [tailwindcss('./tailwind.config.js')],
 })
 
 mix.sass('src/css/popup.scss', 'dist/css')
@@ -27,6 +26,7 @@ mix.sass('src/css/popup.scss', 'dist/css')
     .js('src/js/background.js', 'dist/js')
     .js('src/js/popup.js', 'dist/js')
     .js('src/js/options.js', 'dist/js')
+    .vue()
     .copy('src/popup.html', 'dist/')
     .copy('src/options.html', 'dist/')
     .copyDirectory('src/images', 'dist/images')

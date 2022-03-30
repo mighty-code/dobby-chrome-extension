@@ -2,11 +2,13 @@
 
 require('./bootstrap')
 
-window.Vue = require('vue')
+import Vue from 'vue'
+
+window.Vue = Vue
 
 import Options from './components/Options.vue'
 
 const app = new Vue({
     el: '#app',
-    render: c => c(Options),
+    render: (c) => c(Options),
 })

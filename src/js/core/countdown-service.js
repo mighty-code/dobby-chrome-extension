@@ -1,14 +1,15 @@
-import moment from 'moment'
+import { parseISO, differenceInMinutes, differenceInHours } from 'date-fns'
 
 export default {
     calculateCountdown(connection, nextConnection) {
         if (!connection || !nextConnection) {
             return null
         }
-        let departure = moment.unix(nextConnection.departure_at).utc()
-        let now = moment().utc()
-        let leaveIn = departure.diff(now, 'minutes')
-        let leaveInHours = departure.diff(now, 'hours')
+
+        let departure = parseISO(nextConnection.departure_at)
+        let now = new Date()
+        let leaveIn = differenceInMinutes(departure, now)
+        let leaveInHours = differenceInHours(departure, now)
         leaveIn += leaveInHours * 60
         leaveIn = leaveIn - connection.time_to_station
 

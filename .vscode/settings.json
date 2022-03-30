@@ -1,15 +1,39 @@
 {
-    "eslint.packageManager": "yarn",
-    "npm.packageManager": "yarn",
     "[javascript]": {
         "editor.formatOnSave": false,
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
     },
     "[vue]": {
         "editor.formatOnSave": false,
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[vue-html]": {
+        "editor.formatOnSave": false,
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "[json]": {
+        "editor.formatOnSave": false,
+        "editor.tabSize": 2,
     },
     "editor.codeActionsOnSave": {
+        "source.fixAll": true,
         "source.fixAll.eslint": true
-    }
+    },
+    "eslint.packageManager": "yarn",
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "html",
+        "vue"
+    ],
+    "i18n-ally.keystyle": "nested",
+    "i18n-ally.localesPaths": [
+        "lang"
+    ],
+    "i18n-ally.sourceLanguage": "de-CH",
+    "i18n-ally.sortKeys": false,
+    "npm.packageManager": "yarn"
 }

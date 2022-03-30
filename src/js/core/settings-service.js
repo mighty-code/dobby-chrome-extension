@@ -1,5 +1,7 @@
-function getSettings() {
-    let settings = JSON.parse(localStorage.getItem('settings'))
+import storage from '../core/storage'
+
+async function getSettings() {
+    let settings = await storage.get('settings')
     if (!settings) {
         settings = {}
     }
@@ -7,15 +9,15 @@ function getSettings() {
 }
 
 export default {
-    setSetting(name, value) {
-        const settings = getSettings()
+    async setSetting(name, value) {
+        const settings = await getSettings()
 
         settings[name] = value
 
-        localStorage.setItem('settings', JSON.stringify(settings))
+        await storage.set('settings', settings)
     },
-    getSetting(name) {
-        const settings = getSettings()
+    async getSetting(name) {
+        const settings = await getSettings()
 
         return settings[name]
     },

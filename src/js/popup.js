@@ -2,11 +2,13 @@
 
 require('./bootstrap')
 
-window.Vue = require('vue')
+import Vue from 'vue'
+
+window.Vue = Vue
 
 import Popup from './components/Popup.vue'
 
 const app = new Vue({
     el: '#app',
-    render: c => c(Popup),
+    render: (c) => c(Popup),
 })

@@ -1,21 +1,21 @@
 export default {
     setBadge(countdown) {
         if (!countdown) {
-            chrome.browserAction.setBadgeText({ text: 'setup' })
-            chrome.browserAction.setBadgeBackgroundColor({ color: 'blue' })
+            chrome.action.setBadgeText({ text: 'setup' })
+            chrome.action.setBadgeBackgroundColor({ color: 'blue' })
             return
         }
 
         if (countdown < 5) {
-            chrome.browserAction.setBadgeBackgroundColor({ color: 'red' })
+            chrome.action.setBadgeBackgroundColor({ color: 'red' })
         } else {
-            chrome.browserAction.setBadgeBackgroundColor({ color: 'green' })
+            chrome.action.setBadgeBackgroundColor({ color: 'green' })
         }
 
         if (countdown > 60) {
-            chrome.browserAction.setBadgeText({ text: '>60' })
+            chrome.action.setBadgeText({ text: '>60' })
         } else {
-            chrome.browserAction.setBadgeText({ text: countdown + '' })
+            chrome.action.setBadgeText({ text: countdown + '' })
         }
     },
 }
