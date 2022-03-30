@@ -13,10 +13,12 @@ echo "building"
 yarn prod
 
 echo "publishing"
-npx crx3 dist --zip=.temp/extension.crx \
+npx crx3 dist \
+    --zip=.temp/extension.zip \
+    --crx=.temp/extension.crx \
     --key extension.pem \
     --appVersion "$newVersion" \
-    --browserVersion 70.0.0 \
+    --browserVersion 90.0.0 \
     --xml .temp/extension.xml \
     --crxURL "https://dobby.mighty-code.com/storage/extension.crx"
 scp .temp/extension.crx forge@forge-01.mighty-code.com:dobby.mighty-code.com/storage/app/public
